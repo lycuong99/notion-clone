@@ -1,14 +1,9 @@
-import { ModeToggle } from "@/components/ModeToggle";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <ModeToggle />
-        
-            
-                  <img src="/logo.svg" alt="Notion logo" width={128} height={128} />
       <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center space-y-4 text-center">
