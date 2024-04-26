@@ -1,21 +1,17 @@
 "use client";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
-import { UserButton, UserProfile, useAuth, useUser } from "@clerk/clerk-react";
-import { useConvexAuth } from "convex/react";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import { useUser } from "@clerk/clerk-react";
 import { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { ImperativePanelHandle } from "react-resizable-panels";
 
-import { RxDoubleArrowLeft } from "react-icons/rx";
-import { Createpage } from "@/components/icon";
+import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
+import { Createpage, Menu } from "@/components/icon";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(true);
+  const [menuHover, setMenuHover] = useState(false);
   const [collapsible, setCollapsible] = useState(true);
   const handleDragging = useCallback(() => {
     setCollapsible(!collapsible);
@@ -37,7 +33,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       <ResizablePanel
         ref={sidebarPanelRef}
         className=""
-        defaultSize={25}
+        defaultSize={20}
         collapsible={collapsible}
         maxSize={40}
         minSize={16}
@@ -51,23 +47,38 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
               <p>{user?.fullName}</p>
             </div>
             <div className="flex gap-1 ">
-              <Button variant={"outline"} className="bg-transparent hover:bg-slate-300" size={"icon-sm"}>
+              <Button
+                variant={"outline"}
+                className="bg-transparent hover:bg-slate-300"
+                size={"icon-sm"}
+                onClick={() => setOpen(!open)}
+              >
                 <RxDoubleArrowLeft />
               </Button>
-              <Button variant={"outline"} className="bg-transparent hover:bg-slate-300" size={"icon-sm"}>
-                <Createpage className="font-bold"  />
-              </Button>
+              {open && (
+                <Button variant={"outline"} className="bg-transparent hover:bg-slate-300" size={"icon-sm"}>
+                  <Createpage className="font-bold" />
+                </Button>
+              )}
             </div>
           </div>
         </div>
       </ResizablePanel>
-      <ResizableHandle
-        onDragging={handleDragging}
-        onDragEnd={() => console.log("END")}
-      />
+      <ResizableHandle onDragging={handleDragging} />
       <ResizablePanel className="overflow-auto h-screen">
-        <nav>
-          <button onClick={() => setOpen(!open)}>toggle</button>
+        <nav className="flex p-2">
+          {!open && (
+            <Button
+              variant={"outline"}
+              className="bg-transparent hover:bg-slate-300"
+              size={"icon-sm"}
+              onClick={() => setOpen(!open)}
+              onMouseEnter={() => setMenuHover(true)}
+              onMouseLeave={() => setMenuHover(false)}
+            >
+              {menuHover ? <RxDoubleArrowRight /> : <Menu />}
+            </Button>
+          )}
         </nav>
         {children}
       </ResizablePanel>
