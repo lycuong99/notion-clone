@@ -51,22 +51,32 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         resizeHanleRef.current?.getBoundingClientRect().width;
       // resizeHanleRef.current.style.left = `${sidebarRef.current.offsetWidth}px`;
       if (newWidth > 100) {
-        sidebarRef.current.style.width = `${newWidth}px`;
+        gsap.set(resizeHanleRef.current, {
+          x: sidebarRef.current.clientWidth
+        })
+        // sidebarRef.current.style.width = `${newWidth}px`;
+        
+        console.log("newWidth ss", newWidth);
       }
-      console.log("newWidth", newWidth);
+
+    //   gsap.set(resizeHanleRef.current, {
+    //       x:300,
+    //       y:0
+    //   })
+     
     }
     Draggable.create("[data-gsap-resize-handle]", {
       type: "x",
       cursor: "col-resize",
       activeCursor: "col-resize",
-      bounds: { minX: 300, maxX: 500 },
+      bounds: { minX: 200, maxX: 500 },
       onDrag: () => {
         console.log("newWidth");
         if (sidebarRef.current && resizeHanleRef.current) {
           let newWidth =
             resizeHanleRef.current?.getBoundingClientRect().left +
             resizeHanleRef.current?.offsetWidth;
-          console.log("newWidth", newWidth);
+          console.log("newWidth xx", newWidth);
 
           sidebarRef.current.style.width = `${newWidth}px`;
         }
@@ -161,16 +171,10 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex h-screen overflow-hidden">
       <div
-        className={cn("w-[300px] bg-slate-100 z-10 fixed overflow-hidden origin-top border")}
+        className={cn("w-[300px] bg-slate-100 z-10 origin-top border")}
         ref={sidebarRef}
-        // onMouseOver={()=>{
-
-        // }}∂
-        // onMouseLeave={()=>{
-        //     if(!isExpanded) setOpen(false);
-        // }}
       >
-        <div className="flex justify-between hover:bg-accent hover:text-accent-foreground px-2 py-2 gap-2 ">
+        <div className="flex  justify-between hover:bg-accent hover:text-accent-foreground px-2 py-2 gap-2 ">
           <div className="flex items-center gap-1">
             <Avatar className="w-6 h-6">
               <AvatarImage src={user?.imageUrl} />
@@ -199,7 +203,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
 
         <div
-          className="w-[2px] h-full z-10 bg-gray-200 hover:bg-gray-500 cursor-col-resize absolute top-0"
+          className="w-[4px] h-full hover:bg-gray-200 hover:cursor-col-resize top-0 fixed"
           data-gsap-resize-handle
           ref={resizeHanleRef}
         ></div>
