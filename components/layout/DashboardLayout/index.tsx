@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 import { ImperativePanelHandle } from "react-resizable-panels";
+import { HiOutlineChevronDoubleRight } from "react-icons/hi";
 
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
 import { Createpage, Menu } from "@/components/icon";
@@ -96,7 +97,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       "z-10",
       "top-[80px]",
       "bg-white",
-      "rounded-md",
+      "rounded-r-lg",
       "shadow-md",
     ];
     if (sidebarRef.current) {
@@ -150,18 +151,21 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
       if(sidebarRef.current){
        gsap.to( sidebarRef.current,{
          x: open ? 0 : '-100%',
-         delay: 0.3,
+         delay: 0.2,
+         duration: 0.3,
+         opacity: open ? 1:0,
+         ease: "power1.out",
        })
       }
   },[open])
   return (
     <div className="flex h-screen overflow-hidden">
       <div
-        className={cn("w-[300px] bg-slate-100 z-10 fixed overflow-hidden origin-top")}
+        className={cn("w-[300px] bg-slate-100 z-10 fixed overflow-hidden origin-top border")}
         ref={sidebarRef}
         // onMouseOver={()=>{
 
-        // }}
+        // }}∂
         // onMouseLeave={()=>{
         //     if(!isExpanded) setOpen(false);
         // }}
@@ -205,7 +209,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <Header
           isExpanded={isExpanded}
           handleExpand={handleExpand}
-          setMenuHover={setMenuHover}
+        //   setMenuHover={setMenuHover}
         />
         <main className="flex-1">{children}</main>
       </div>
@@ -219,9 +223,9 @@ const Sidebar = () => {
 interface HeaderProps {
   isExpanded: boolean;
   handleExpand: React.Dispatch<React.SetStateAction<boolean>>;
-  setMenuHover: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const Header = ({ isExpanded, handleExpand, setMenuHover }: HeaderProps) => {
+const Header = ({ isExpanded, handleExpand }: HeaderProps) => {
+    const [hover , setHover] = useState(false);
   return (
     <header>
       <nav className="flex p-2">
@@ -231,10 +235,10 @@ const Header = ({ isExpanded, handleExpand, setMenuHover }: HeaderProps) => {
             className="bg-transparent hover:bg-slate-300"
             size={"icon-sm"}
             onClick={() => handleExpand(!isExpanded)}
-            onMouseEnter={() => setMenuHover(true)}
-            onMouseLeave={() => setMenuHover(false)}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
           >
-            {isExpanded ? <RxDoubleArrowRight /> : <Menu />}
+            {hover ? <HiOutlineChevronDoubleRight /> : <Menu />}
           </Button>
         )}
       </nav>
