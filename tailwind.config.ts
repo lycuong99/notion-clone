@@ -17,6 +17,16 @@ const config = {
         "2xl": "1400px",
       },
     },
+    borderRadius: {
+      'none': '0',
+      'sm': '6px',
+      DEFAULT: '6px',
+      'md': '11px',
+      'lg': '22px',
+      'large': '33px',
+      'full': '9999px',
+
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",

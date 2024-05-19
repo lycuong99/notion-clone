@@ -1,6 +1,4 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { SignOutButton, useUser } from "@clerk/clerk-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,7 +9,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { ChevronDown } from "@/components/icon";
-import { SignedOut } from "@clerk/nextjs";
+import { SignOutButton, useUser } from "@clerk/nextjs";
+
 export const UserProfile = ({ className }: { className?: string }) => {
   const { user } = useUser();
   return (
